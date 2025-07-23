@@ -3,26 +3,26 @@ pipeline {
 
     environment {
         DOCKERHUB_CREDENTIALS = 'dockerhub-creds'  // ID of Jenkins credential
-        DOCKER_IMAGE = 'luckykilari/python-flask-app' 
+        DOCKER_IMAGE = 'chalasaniakhil/python-app-demo' 
         // SONARQUBE_ENV = 'SonarQube'
     }
 
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'main', url: 'https://github.com/LuckyKilari/Python_Sample_CICD.git' 
+                git branch: 'main', url: 'https://github.com/chalasaniakhil/Python_app_demo.git' 
             }
         }
 
         stage('SonarQube Scan') {
             steps {
-                withCredentials([string(credentialsId: 'SonarQube', variable: 'SONAR_TOKEN')]) {
+                withCredentials([string(credentialsId: 'SONAR_TOKEN', variable: 'SONAR_TOKEN')]) {
                     sh '''
                            /opt/sonar-scanner/bin/sonar-scanner \
-                          -Dsonar.projectName=python-demo \
+                          -Dsonar.projectName=python-app-demo \
                           -Dsonar.projectKey=python-flask-app \
                           -Dsonar.sources=. \
-                          -Dsonar.host.url=http://13.127.162.119:9000/ \
+                          -Dsonar.host.url=http://56.228.31.45:9000/ \
                           -Dsonar.login=$SONAR_TOKEN
                     '''
                 }
@@ -69,11 +69,11 @@ pipeline {
             steps {
                 sshagent(['EC2_SSH_KEY']) {
                     sh """
-                        ssh -o StrictHostKeyChecking=no ubuntu@13.126.114.241 '
-                            docker pull luckykilari/python-flask-app:$BUILD_NUMBER &&
+                        ssh -o StrictHostKeyChecking=no ubuntu@16.170.242.31 '
+                            docker pull chalasaniakhil/python-app-demo:$BUILD_NUMBER &&
                             docker stop flask-app || true &&
                             docker rm flask-app || true &&
-                            docker run -d -p 5000:5000 --name flask-app luckykilari/python-flask-app:$BUILD_NUMBER
+                            docker run -d -p 5000:5000 --name flask-app chalasaniakhil/python-app-demo:$BUILD_NUMBER
                         '
                     """
                 }
