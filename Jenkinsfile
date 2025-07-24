@@ -22,7 +22,7 @@ pipeline {
                           -Dsonar.projectName=python-app-demo \
                           -Dsonar.projectKey=python-flask-app \
                           -Dsonar.sources=. \
-                          -Dsonar.host.url=http://56.228.31.45:9000/ \
+                          -Dsonar.host.url=http://51.20.7.164:9000// \
                           -Dsonar.login=$SONAR_TOKEN
                     '''
                 }
@@ -69,7 +69,7 @@ pipeline {
             steps {
                 sshagent(['EC2_SSH_KEY']) {
                     sh """
-                        ssh -o StrictHostKeyChecking=no ubuntu@16.170.242.31 '
+                        ssh -o StrictHostKeyChecking=no ubuntu@16.170.247.74 '
                             docker pull chalasaniakhil/python-app-demo:$BUILD_NUMBER &&
                             docker stop flask-app || true &&
                             docker rm flask-app || true &&
