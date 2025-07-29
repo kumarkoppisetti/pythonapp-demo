@@ -14,20 +14,20 @@ pipeline {
             }
         }
 
-        stage('SonarQube Scan') {
-            steps {
-                withCredentials([string(credentialsId: 'sonarqube-token', variable: 'SONAR_TOKEN')]) {
-                    sh '''
-                           /opt/sonar-scanner/bin/sonar-scanner \
-                          -Dsonar.projectName=python-app-demo \
-                          -Dsonar.projectKey=python-flask-app \
-                          -Dsonar.sources=. \
-                          -Dsonar.host.url=http://34.203.215.49:9000 \
-                          -Dsonar.token=sqa_87751d8aaf386c53e837aeca41111f9979f776b0
-                    '''
-                }
-            }
-        }
+        // stage('SonarQube Scan') {
+        //     steps {
+        //         withCredentials([string(credentialsId: 'sonarqube-token', variable: 'SONAR_TOKEN')]) {
+        //             sh '''
+        //                    /opt/sonar-scanner/bin/sonar-scanner \
+        //                   -Dsonar.projectName=python-app-demo \
+        //                   -Dsonar.projectKey=python-flask-app \
+        //                   -Dsonar.sources=. \
+        //                   -Dsonar.host.url=http://34.203.215.49:9000 \
+        //                   -Dsonar.token=sqa_87751d8aaf386c53e837aeca41111f9979f776b0
+        //             '''
+        //         }
+        //     }
+        // }
 
         
         stage('Build Docker Image') {
