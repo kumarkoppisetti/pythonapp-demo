@@ -52,7 +52,7 @@ pipeline {
             steps {
                 sshagent(['EC2_SSH_KEY']) {
                     sh """
-                        ssh -o StrictHostKeyChecking=no ec2-user@13.222.242.130 '
+                        ssh -o StrictHostKeyChecking=no ec2-user@3.93.215.126 '
                             docker pull kumarkoppisetti/flask-app:$BUILD_NUMBER &&
                             docker stop flask-app || true &&
                             docker rm flask-app || true &&
